@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ business.title }}{% endblock %}
+
+{% block body %}
+	<h1>{{ business.title }}</h1>
+	<p>In {{ business.getListCategories() }}</p>
+	<br>
+	<h2>About</h2>
+	<p>
+		{{ business.description }}<br>
+		Address: {{ business.address }}, {{ business.idCity.name }} - {{ business.idCity.idState.name }}, {{ business.zipcode }}<br>
+		Phone: {{ business.phone }}
+	</p>
+	<hr>
+	<a href="/">Go Back</a>
+{% endblock %}

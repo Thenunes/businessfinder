@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add Business{% endblock %}
+
+{% block body %}
+	<h1>Add Business</h1>
+	<br>
+	{{ form_start(form) }}
+		{{ form_row(form.title) }}<br>
+	    {{ form_row(form.phone) }}<br>
+	    {{ form_row(form.address) }}<br>
+	    {{ form_row(form.zipcode) }}<br>
+	    {{ form_row(form.id_state) }}<br>
+	    {{ form_row(form.id_city) }}<br>
+	    {{ form_row(form.description) }}<br>
+		{{ form_row(form.categories) }}<br>
+
+	    <button type="submit" class="btn btn-success btn-lg">Save</button>
+	    <br><br><br>
+	{{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+	<script>
+		$('#business_id_state').change(function () {
+			var $this = $(this);
+			
+			// Request the neighborhoods of the selected city.
+			$.ajax({
+				url: "{{ path('state_get_cities') }}",
+				type: "GET",
+				dataType: "JSON",
+				data: {
+					stateid: $this.val()
+				},
+				success: function (cities) {
+					var select = $("#business_id_city");
+					select.html('');
+					select.append('<option value> Select a city of ' + $this.find("option:selected").text() + ' ...</option>');
+					
+					
+					$.each(cities, function (key, city) {
+						select.append('<option value="' + city.id + '">' + city.name + '</option>');
+					});
+				},
+				error: function (err) {
+					alert("An error ocurred while loading data ...");
+				}
+			});
+		});
+	</script>
+{% endblock %}

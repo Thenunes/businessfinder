@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Business Finder{% endblock %}
+
+{% block body %}
+	<div class="text-center">
+		<h1>Business Finder</h1>
+		<form>
+			<div class="form-group">
+				<input class="form-control form-control-lg" type="text" name="q" value="{{ q }}" placeholder="What are you looking for?" required>
+			</div>
+			<button type="submit" class="btn btn-primary btn-lg">Search</button>
+		</form>
+	</div>
+	<br>
+	<div id="search">
+		{% if q %}
+			<h2>Results for "{{ q }}":</h2>
+			<br>
+			<div class="list-group w-100">
+				{% for company in business %}
+					<a href="/business/view/id/{{company.id}}" class="list-group-item list-group-item-action flex-column align-items-start">
+						<div class="d-flex w-100 justify-content-between">
+							<h3>{{ company.title }}</h3>
+						</div>
+						<p class="mb-1">In {{ company.getListCategories() }}</p>
+					</a>
+				{% endfor %}
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}
